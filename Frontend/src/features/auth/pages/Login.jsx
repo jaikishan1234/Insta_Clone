@@ -1,24 +1,36 @@
+// UI Layer only going to communicate with the hooks only it doesnt care about state layer and api layer. This is just a form that will call the login function from the context when the form is submitted, and also handle the input state for username and password, all the error handling will be done in the context layerz
+
 import React, { useState } from 'react'
 import '../style/form.scss'
 import { Link } from 'react-router'
-import axios from 'axios'
+import { useAuth } from '../hooks/useAuth'
+import { useNavigate } from 'react-router'
+
 
 const Login = () => {
 
     const [ username, setUsername ] = useState("")
     const [ password, setPassword ] = useState("")
 
+    const { handleLogin,loading } = useAuth()
+    const navigate = useNavigate()
+
+
+    if (loading) {
+        return (
+            <h1>Loading...</h1>
+        )
+    }
 
     function handleSubmit(e) {
         e.preventDefault()
 
-        axios.post("http://localhost:3000/api/auth/login", {
-            username,
-            password,
-        }, { withCredentials: true })
-            .then(res => {
-                console.log(res.data)
-            })
+        handleLogin(username, password)
+        .then(res=>{
+            console.log(res)
+            navigate("/")
+        })
+
     }
 
 
