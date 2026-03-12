@@ -1,5 +1,3 @@
-// UI Layer only going to communicate with the hooks only it doesnt care about state layer and api layer. This is just a form that will call the login function from the context when the form is submitted, and also handle the input state for username and password, all the error handling will be done in the context layerz
-
 import React, { useState } from 'react'
 import "../style/form.scss"
 import { Link } from 'react-router'
